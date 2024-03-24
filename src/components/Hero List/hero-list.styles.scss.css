@@ -1,0 +1,23 @@
+.table-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: gray;
+    color: white;
+}
+
+.table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.even-row {
+    background-color: lightgray;
+}
+
+.odd-row {
+    background-color: darkgray;
+}
