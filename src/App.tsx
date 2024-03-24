@@ -9,20 +9,27 @@ import Header from "./components/Header/header.component.tsx";
 
 function App() {
   const [deckData, setDeckData] = useState<any>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
 
   const handleDeckFetch = (data: any) => {
     setDeckData(data);
     console.log(data);
   };
 
+  const handleViewModeChange = (mode: 'grid' | 'list') => {
+    setViewMode(mode);
+  };
+
   return (
       <div className="App">
           {deckData ? (
               <div className="content-container">
-                  <Header deckName={deckData.name} onDeckFetch={handleDeckFetch} />
+                  <Header deckName={deckData.name} onDeckFetch={handleDeckFetch} onViewModeChange={handleViewModeChange}/>
                   <HeroList
                       deckName={deckData.name}
                       heroes={deckData.heroes}
+                      viewMode={viewMode}
                   />
               </div>
           ) : (

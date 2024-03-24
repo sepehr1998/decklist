@@ -21,3 +21,10 @@
 .odd-row {
     background-color: darkgray;
 }
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}

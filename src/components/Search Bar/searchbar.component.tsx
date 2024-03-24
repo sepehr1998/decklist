@@ -14,7 +14,8 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) => {
     const [deckId, setDeckId] = useState('');
 
-    const handleSearch = async () => {
+    const handleSearch = async (event: React.FormEvent) => {
+        event.preventDefault();
         try {
             const data = await fetchDeckById(deckId);
             const heroesArray = Object.keys(data.heroes).map((heroId) => ({
@@ -28,6 +29,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
         }
     };
 
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearch(event);
+        }
+    };
+
     return (
         <>
             {visible && (
@@ -35,6 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
                     <Paper
                         component="form"
                         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+                        onSubmit={handleSearch}
                     >
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
@@ -42,8 +50,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
                             inputProps={{ 'aria-label': 'search google maps' }}
                             onChange={(e) => setDeckId(e.target.value)}
                             value={deckId}
+                            onKeyPress={handleKeyPress}
                         />
-                        <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
+                        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
                             <SearchIcon />
                         </IconButton>
                     </Paper>

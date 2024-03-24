@@ -1,6 +1,8 @@
 export const modalStyle = {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -10,4 +12,6 @@ export const modalStyle = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    overflowY: 'scroll',
+    borderRadius: 10,
 };

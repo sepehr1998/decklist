@@ -21,5 +21,6 @@ export const fetchDeckById = async (deckId: string) => {
 export async function fetchHeroDetails(heroId: string): Promise<{ id: string, name: string }> {
     const response = await fetch(`${HERO_BASE_URL}/${heroId}.json`);
     const data = await response.json();
-    return { id: heroId, name: data.name };
+    // return { id: heroId, name: data.name };
+    return data;
 }
