@@ -4,6 +4,7 @@ import Modal from '../Modal/modal.component.tsx';
 import { fetchHeroDetails } from '../../utils/utils.tsx';
 import { Hero } from '../../types';
 import Card from "../Card/card.component.tsx";
+import HeroPropIndicator from "../Hero Prop Indicator/hero-prop-indicator.component.tsx";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -51,6 +52,9 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
                                 <TableRow>
                                     <TableCell>ID</TableCell>
                                     <TableCell align="left">Name</TableCell>
+                                    <TableCell align="center">Attack</TableCell>
+                                    <TableCell align="center">Defense</TableCell>
+                                    <TableCell align="center">Health</TableCell>
                                     <TableCell align="right">More Information</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -60,9 +64,22 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
                                         key={index}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row" style={{ width: '30%' }}>{hero?.code}</TableCell>
-                                        <TableCell component="th" align="left" style={{ width: '70%' }}>{hero?.name}</TableCell>
-                                        <TableCell component="th" align="right" style={{ width: '70%' }}>
+                                        <TableCell component="th" scope="row" style={{ width: '15%' }}>
+                                            {hero?.code}
+                                        </TableCell>
+                                        <TableCell component="th" align="left" style={{ width: '15%' }}>
+                                            {hero?.name}
+                                        </TableCell>
+                                        <TableCell component="th" align="center" style={{ width: '15%' }}>
+                                            <HeroPropIndicator value={hero?.attack} color="error"/>
+                                        </TableCell>
+                                        <TableCell component="th" align="center" style={{ width: '15%' }}>
+                                            <HeroPropIndicator value={hero?.attack} color="warning"/>
+                                        </TableCell>
+                                        <TableCell component="th" align="center" style={{ width: '15%' }}>
+                                            <HeroPropIndicator value={hero?.attack} color="success"/>
+                                        </TableCell>
+                                        <TableCell component="th" align="right" style={{ width: '25%' }}>
                                             <Button variant="contained" onClick={() => openModal(hero)}>Info</Button>
                                         </TableCell>
                                     </TableRow>

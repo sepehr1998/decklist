@@ -9,13 +9,15 @@ import { fetchDeckById } from '../../utils/utils.tsx';
 interface SearchBarProps {
     onDeckFetch: (data: any) => void;
     visible?: boolean;
+    setLoading: (loading: boolean) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true, setLoading }) => {
     const [deckId, setDeckId] = useState('');
 
     const handleSearch = async (event: React.FormEvent) => {
         event.preventDefault();
+        setLoading(true);
         try {
             const data = await fetchDeckById(deckId);
             const heroesArray = Object.keys(data.heroes).map((heroId) => ({
@@ -26,6 +28,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
             setDeckId('');
         } catch (error) {
             console.error('Error fetching deck:', error);
+        } finally {
+            setLoading(false);
         }
     };
 

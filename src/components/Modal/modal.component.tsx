@@ -24,9 +24,6 @@ function createData(
     return { key, value };
 }
 
-
-
-
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, hero }) => {
     const BASE_URL = 'https://ringsdb.com/';
 

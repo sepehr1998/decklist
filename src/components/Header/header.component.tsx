@@ -10,13 +10,14 @@ interface HeaderProps {
     deckName: string;
     onDeckFetch: (data: any) => void;
     onViewModeChange: (mode: 'grid' | 'list') => void;
+    setLoading: (loading: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ deckName, onDeckFetch, onViewModeChange }) => {
+const Header: React.FC<HeaderProps> = ({ deckName, onDeckFetch, onViewModeChange, setLoading }) => {
     return (
         <div className="header-container">
             <div>Deck Name: {deckName}</div>
-            <SearchBar onDeckFetch={onDeckFetch} />
+            <SearchBar onDeckFetch={onDeckFetch} setLoading={setLoading}/>
             <div className="layout-selector">
                 <IconButton type="button" sx={{ p: '10px' }} aria-label="grid" onClick={() => onViewModeChange('grid')}>
                     <GridIcon />

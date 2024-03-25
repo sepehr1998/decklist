@@ -4,4 +4,7 @@ export interface Hero {
     imagesrc: string;
     traits: string;
     pack_name: string;
+    attack: number;
+    defense: number;
+    health: number;
 }

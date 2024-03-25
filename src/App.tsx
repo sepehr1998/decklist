@@ -6,11 +6,12 @@ import SearchBar from './components/Search Bar/searchbar.component.tsx';
 import HeroList from './components/Hero List/hero-list.component.tsx';
 // @ts-ignore
 import Header from "./components/Header/header.component.tsx";
+import {CircularProgress} from "@mui/material";
 
 function App() {
   const [deckData, setDeckData] = useState<any>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDeckFetch = (data: any) => {
     setDeckData(data);
@@ -25,17 +26,26 @@ function App() {
       <div className="App">
           {deckData ? (
               <div className="content-container">
-                  <Header deckName={deckData.name} onDeckFetch={handleDeckFetch} onViewModeChange={handleViewModeChange}/>
+                  <Header
+                      deckName={deckData.name}
+                      onDeckFetch={handleDeckFetch}
+                      onViewModeChange={handleViewModeChange}
+                      setLoading={setIsLoading}
+                  />
+                {isLoading ? (
+                    <CircularProgress />
+                ) : (
                   <HeroList
                       deckName={deckData.name}
                       heroes={deckData.heroes}
                       viewMode={viewMode}
                   />
+                    )}
               </div>
           ) : (
-              <div>
+              <div className="initial-search">
                   <h1>Enter the Deck ID</h1>
-                  <SearchBar onDeckFetch={handleDeckFetch} visible />
+                  <SearchBar onDeckFetch={handleDeckFetch} visible setLoading={setIsLoading}/>
               </div>
           )}
       </div>
