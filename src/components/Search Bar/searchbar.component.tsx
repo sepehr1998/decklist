@@ -61,13 +61,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
                     >
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
+                            aria-label='search-input'
                             placeholder="Enter Deck Id"
-                            inputProps={{ 'aria-label': 'search google maps' }}
+                            inputProps={{ 'aria-label': 'search deck id' }}
                             onChange={(e) => setDeckId(e.target.value)}
                             value={deckId}
                             onKeyPress={handleKeyPress}
                         />
-                        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search-button">
                             <SearchIcon />
                         </IconButton>
                     </Paper>

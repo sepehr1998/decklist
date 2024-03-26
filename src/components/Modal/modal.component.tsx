@@ -78,7 +78,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, hero }) => {
                                 </Paper>
                             </div>
                             <div className="close-button">
-                                <IconButton type="button" onClick={onClose}>
+                                <IconButton aria-label="close-button" type="button" onClick={onClose}>
                                     <CloseIcon/>
                                 </IconButton>
                             </div>

@@ -107,7 +107,9 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
                                             <HeroPropIndicator value={hero.health} color="success"/>
                                         </TableCell>
                                         <TableCell component="th" align="right" style={{ width: '25%' }}>
-                                            <Button variant="contained" onClick={() => openModal(hero)}>Info</Button>
+                                            <Button aria-label="info-button"
+                                                    variant="contained"
+                                                    onClick={() => openModal(hero)}>Info</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}

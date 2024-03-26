@@ -29,7 +29,7 @@ function App() {
                       onViewModeChange={handleViewModeChange}
                   />
                 {loading ? (
-                    <CircularProgress />
+                    <CircularProgress aria-label='loading-spinner'/>
                 ) : (
                   <HeroList
                       deckName={deckData.name}
