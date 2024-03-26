@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Modal from '../Modal/modal.component.tsx';
-import { fetchHeroDetails } from '../../utils/utils.tsx';
+import Modal from '../Modal/modal.component';
+import { fetchHeroDetails } from '../../utils/utils';
 import { Hero } from '../../types';
-import Card from "../Card/card.component.tsx";
-import HeroPropIndicator from "../Hero Prop Indicator/hero-prop-indicator.component.tsx";
-import CustomAlert from "../Alert/alert.component.tsx";
+import Card from "../Card/card.component";
+import HeroPropIndicator from "../Hero Prop Indicator/hero-prop-indicator.component";
+import CustomAlert from "../Alert/alert.component";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,12 +16,13 @@ import TableHead from '@mui/material/TableHead';
 import {Button} from "@mui/material";
 
 import './hero-list.styles.scss';
-import { tableCellHeader, tableCell } from "./hero-list.tableStyles.ts";
-import {useLoading} from "../../contexts/loading.context.tsx";
+import { tableCellHeader, tableCell } from "./hero-list.tableStyles";
+import {useLoading} from "../../contexts/loading.context";
 
 interface HeroListProps {
+    deckName: string;
     heroes: Hero[];
-    viewMode: string;
+    viewMode: 'grid' | 'list';
 }
 
 const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {

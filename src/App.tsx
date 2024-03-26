@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import SearchBar from './components/Search Bar/searchbar.component.tsx';
-import HeroList from './components/Hero List/hero-list.component.tsx';
-import Header from "./components/Header/header.component.tsx";
+import SearchBar from './components/Search Bar/searchbar.component';
+import HeroList from './components/Hero List/hero-list.component';
+import Header from "./components/Header/header.component";
 import {CircularProgress} from "@mui/material";
-import { useLoading } from './contexts/loading.context.tsx';
+import { useLoading } from './contexts/loading.context';
 
 function App() {
   const [deckData, setDeckData] = useState<any>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
-  const { isLoading } = useLoading();
+  const { loading } = useLoading();
 
   const handleDeckFetch = (data: any) => {
     setDeckData(data);
@@ -28,7 +28,7 @@ function App() {
                       onDeckFetch={handleDeckFetch}
                       onViewModeChange={handleViewModeChange}
                   />
-                {isLoading ? (
+                {loading ? (
                     <CircularProgress />
                 ) : (
                   <HeroList

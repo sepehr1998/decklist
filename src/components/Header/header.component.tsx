@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBar from '../Search Bar/searchbar.component.tsx';
+import SearchBar from '../Search Bar/searchbar.component';
 import IconButton from '@mui/material/IconButton';
 import GridIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/ViewList';

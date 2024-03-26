@@ -3,9 +3,9 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { fetchDeckById } from '../../utils/utils.tsx';
-import CustomAlert from "../Alert/alert.component.tsx";
-import {useLoading} from "../../contexts/loading.context.tsx";
+import { fetchDeckById } from '../../utils/utils';
+import CustomAlert from "../Alert/alert.component";
+import {useLoading} from "../../contexts/loading.context";
 
 interface SearchBarProps {
     onDeckFetch: (data: any) => void;

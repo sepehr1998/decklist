@@ -1,11 +1,15 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface LoadingContextType {
+export interface LoadingContextType {
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
+
+interface LoadingProviderProps {
+    children: ReactNode; 
+}
 
 export const useLoading = () => {
     const context = useContext(LoadingContext);
@@ -15,7 +19,7 @@ export const useLoading = () => {
     return context;
 };
 
-export const LoadingProvider: React.FC = ({ children }) => {
+export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) => {
     const [loading, setLoading] = useState(false);
 
     return (

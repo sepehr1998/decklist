@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
-import { LoadingProvider } from "./contexts/loading.context.tsx";
+import App from './App';
+import { LoadingProvider } from "./contexts/loading.context";
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

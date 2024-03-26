@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { Hero } from '../../types';
-import HeroPropIndicator from "../Hero Prop Indicator/hero-prop-indicator.component.tsx";
+import HeroPropIndicator from "../Hero Prop Indicator/hero-prop-indicator.component";
 import './card.styles.scss';
 
 interface CustomCardProps {

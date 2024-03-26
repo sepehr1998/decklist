@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import {Modal as MaterialUIModal, Fade} from '@mui/material';
 import { Hero } from '../../types';
-import { modalStyle } from "./modal.material.styles.ts";
+import { modalStyle } from "./modal.material.styles";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
