@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
+import { LoadingProvider } from "./contexts/loading.context.tsx";
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+document.title = 'Deck List';
 root.render(
   <React.StrictMode>
-    <App />
+      <LoadingProvider>
+          <App />
+      </LoadingProvider>
   </React.StrictMode>
 );
 

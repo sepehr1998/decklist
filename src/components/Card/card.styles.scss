@@ -1,0 +1,13 @@
+.props-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 2.5rem;
+}
+
+.indicator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}

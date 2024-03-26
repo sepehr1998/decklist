@@ -1,19 +1,29 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-// @ts-ignore
 import { fetchDeckById } from '../../utils/utils.tsx';
+import CustomAlert from "../Alert/alert.component.tsx";
+import {useLoading} from "../../contexts/loading.context.tsx";
 
 interface SearchBarProps {
     onDeckFetch: (data: any) => void;
     visible?: boolean;
-    setLoading: (loading: boolean) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true, setLoading }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) => {
     const [deckId, setDeckId] = useState('');
+    const [alert, setAlert] = useState<string>('');
+    const { setLoading } = useLoading();
+
+    const addAlert = (message: string) => {
+        setAlert(message);
+        // Remove the alert after 4 seconds
+        setTimeout(() => {
+            setAlert('');
+        }, 4000);
+    };
 
     const handleSearch = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -27,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true, setL
             onDeckFetch({ name: data.name, heroes: heroesArray }); // Convert heroes to array before passing
             setDeckId('');
         } catch (error) {
-            console.error('Error fetching deck:', error);
+            addAlert(`Fetching deck unsuccessful: ${error}`);
         } finally {
             setLoading(false);
         }
@@ -41,11 +51,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true, setL
 
     return (
         <>
+            {alert && <CustomAlert alert={alert} />}
             {visible && (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Paper
                         component="form"
-                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
                         onSubmit={handleSearch}
                     >
                         <InputBase

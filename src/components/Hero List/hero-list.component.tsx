@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import './hero-list.styles.scss.css';
+import React, { useEffect, useState } from 'react';
 import Modal from '../Modal/modal.component.tsx';
 import { fetchHeroDetails } from '../../utils/utils.tsx';
 import { Hero } from '../../types';
 import Card from "../Card/card.component.tsx";
 import HeroPropIndicator from "../Hero Prop Indicator/hero-prop-indicator.component.tsx";
+import CustomAlert from "../Alert/alert.component.tsx";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,9 +13,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableHead from '@mui/material/TableHead';
-
 import {Button} from "@mui/material";
 
+import './hero-list.styles.scss';
+import { tableCellHeader, tableCell } from "./hero-list.tableStyles.ts";
+import {useLoading} from "../../contexts/loading.context.tsx";
 
 interface HeroListProps {
     heroes: Hero[];
@@ -25,15 +27,34 @@ interface HeroListProps {
 const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
     const [heroDetails, setHeroDetails] = useState<Hero[]>([]);
     const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
+    const [alert, setAlert] = useState<string>('');
+    const { setLoading } = useLoading();
+
+    const addAlert = (message: string) => {
+        setAlert(message);
+        // Remove the alert after 3 seconds
+        setTimeout(() => {
+            setAlert('');
+        }, 4000);
+    };
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const details = await Promise.all(heroes.map(hero => fetchHeroDetails(hero.id)));
-            setHeroDetails(details);
+            setLoading(true);
+            try {
+                const details = await Promise.all(heroes.map(hero => fetchHeroDetails(hero.id)));
+                const mappedDetails: Hero[] = details.map(detail => ({
+                    ...(detail as Hero)}));
+                setHeroDetails(mappedDetails);
+            } catch (error) {
+                addAlert(`Failed to fetch hero details: ${error}`);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchDetails();
-    }, [heroes]);
+    }, [heroes, setLoading]);
 
     const openModal = (hero: Hero) => {
         setSelectedHero(hero);
@@ -45,17 +66,19 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
 
     return (
         <div>
+            {alert && <CustomAlert alert={alert} />}
             {viewMode === 'list' ? (
-                    <TableContainer component={Paper}>
+                <Paper>
+                    <TableContainer>
                         <Table sx={{ minWidth: 400 }}>
                             <TableHead>
-                                <TableRow>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell align="left">Name</TableCell>
-                                    <TableCell align="center">Attack</TableCell>
-                                    <TableCell align="center">Defense</TableCell>
-                                    <TableCell align="center">Health</TableCell>
-                                    <TableCell align="right">More Information</TableCell>
+                                <TableRow sx={{ backgroundColor: 'black' }}>
+                                    <TableCell align="left" sx={tableCellHeader}>Name</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>ID</TableCell>
+                                    <TableCell align="center" sx={tableCellHeader}>Attack</TableCell>
+                                    <TableCell align="center" sx={tableCellHeader}>Defense</TableCell>
+                                    <TableCell align="center" sx={tableCellHeader}>Health</TableCell>
+                                    <TableCell align="right" sx={tableCellHeader}>More Information</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -64,20 +87,20 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
                                         key={index}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row" style={{ width: '15%' }}>
-                                            {hero?.code}
-                                        </TableCell>
-                                        <TableCell component="th" align="left" style={{ width: '15%' }}>
+                                        <TableCell component="th" align="left" style={tableCell}>
                                             {hero?.name}
                                         </TableCell>
-                                        <TableCell component="th" align="center" style={{ width: '15%' }}>
-                                            <HeroPropIndicator value={hero?.attack} color="error"/>
+                                        <TableCell component="th" scope="row" style={tableCell}>
+                                            {hero?.code}
                                         </TableCell>
-                                        <TableCell component="th" align="center" style={{ width: '15%' }}>
-                                            <HeroPropIndicator value={hero?.attack} color="warning"/>
+                                        <TableCell component="th" align="center" style={tableCell}>
+                                            <HeroPropIndicator value={hero.attack} color="error"/>
                                         </TableCell>
-                                        <TableCell component="th" align="center" style={{ width: '15%' }}>
-                                            <HeroPropIndicator value={hero?.attack} color="success"/>
+                                        <TableCell component="th" align="center" style={tableCell}>
+                                            <HeroPropIndicator value={hero.defense} color="warning"/>
+                                        </TableCell>
+                                        <TableCell component="th" align="center" style={tableCell}>
+                                            <HeroPropIndicator value={hero.health} color="success"/>
                                         </TableCell>
                                         <TableCell component="th" align="right" style={{ width: '25%' }}>
                                             <Button variant="contained" onClick={() => openModal(hero)}>Info</Button>
@@ -87,10 +110,13 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                </Paper>
             ) : (
-                <div className="card-container">
+                <div className="cards-container">
                     {heroDetails.map((hero, index) => (
-                        <Card key={index} hero={hero} onShowMore={() => openModal(hero)} />
+                        <div className='card-container'>
+                            <Card key={index} hero={hero} onShowMore={() => openModal(hero)} />
+                        </div>
                     ))}
                 </div>
             )}
