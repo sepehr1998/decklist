@@ -43,10 +43,13 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
         const fetchDetails = async () => {
             setLoading(true);
             try {
-                const details = await Promise.all(heroes.map(hero => fetchHeroDetails(hero.id)));
-                const mappedDetails: Hero[] = details.map(detail => ({
-                    ...(detail as Hero)}));
-                setHeroDetails(mappedDetails);
+                Promise.all(heroes.map(hero => fetchHeroDetails(hero.id)))
+                    .then((details: any[]) => {
+                        const mappedDetails: Hero[] = details.map(detail => ({
+                            ...(detail as Hero)
+                        }));
+                        setHeroDetails(mappedDetails);
+                    })
             } catch (error) {
                 addAlert(`Failed to fetch hero details: ${error}`);
             } finally {
