@@ -17,6 +17,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
     const [alert, setAlert] = useState<string>('');
     const { setLoading } = useLoading();
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value;
+        // Regex to match only numbers
+        const numbersRegex = /^[0-9]*$/;
+        if (input === '' || numbersRegex.test(input)) {
+            setDeckId(input);
+        }
+    };
+
     const addAlert = (message: string) => {
         setAlert(message);
         // Remove the alert after 4 seconds
@@ -43,6 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
         }
     };
 
+    // Handle submit search query by pressing "Enter"
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch(event);
@@ -64,7 +74,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onDeckFetch, visible = true }) =>
                             aria-label='search-input'
                             placeholder="Enter Deck Id"
                             inputProps={{ 'aria-label': 'search deck id' }}
-                            onChange={(e) => setDeckId(e.target.value)}
+                            onChange={handleInputChange}
                             value={deckId}
                             onKeyPress={handleKeyPress}
                         />

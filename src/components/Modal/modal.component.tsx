@@ -20,6 +20,7 @@ interface ModalProps {
     hero: Hero | null;
 }
 
+// Function that creates the rows for the hero information table
 function createData(
     key: string,
     value: string | undefined,

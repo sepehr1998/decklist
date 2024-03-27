@@ -39,6 +39,7 @@ const HeroList: React.FC<HeroListProps> = ({ heroes, viewMode }) => {
         }, 4000);
     };
 
+    // Fetch the information for each hero after the Hero Ids are defined
     useEffect(() => {
         const fetchDetails = async () => {
             setLoading(true);

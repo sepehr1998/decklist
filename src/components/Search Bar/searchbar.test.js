@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import SearchBar from './searchbar.component';
 import { fetchDeckById } from '../../utils/utils';
 import {LoadingProvider} from "../../contexts/loading.context";
@@ -11,22 +11,22 @@ jest.mock('../../utils/utils', () => ({
 describe('SearchBar Component', () => {
     it('should render correctly and call onDeckFetch on search', async () => {
         const onDeckFetchMock = jest.fn();
-        const { getByRole } = render(
+        render(
             <LoadingProvider>
                 <SearchBar onDeckFetch={onDeckFetchMock} />
             </LoadingProvider>
         );
 
         // Simulate typing in deck ID
-        fireEvent.change(getByRole('textbox', { name: 'search deck id' }), { target: { value: 'mock-deck-id' } });
+        fireEvent.change(screen.getByRole('textbox', { name: 'search deck id' }), { target: { value: 'mock-deck-id' } });
 
         // Simulate clicking on search button
-        fireEvent.click(getByRole('button', { name: /search/i }));
+        fireEvent.click(screen.getByRole('button', { name: /search/i }));
 
     });
 
     it('should display an alert on failed deck fetch', async () => {
-        const { getByRole, getByText } = render(
+       render(
             <LoadingProvider>
                 <SearchBar onDeckFetch={() => {}} />
             </LoadingProvider>
@@ -36,11 +36,11 @@ describe('SearchBar Component', () => {
         fetchDeckById.mockRejectedValueOnce('Error fetching deck');
 
         // Simulate clicking on search button
-        fireEvent.click(getByRole('button', { name: /search/i }));
+        fireEvent.click(screen.getByRole('button', { name: /search/i }));
 
         await waitFor(() => {
             // Ensure that an alert with the error message is displayed
-            expect(getByText(/fetching deck unsuccessful/i)).toBeInTheDocument();
+            expect(screen.getByText(/fetching deck unsuccessful/i)).toBeInTheDocument();
         });
     });
 });
