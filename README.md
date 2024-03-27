@@ -39,6 +39,9 @@ For visualizing more information about the heroes, a modal is used. We have a se
 
 In case of any errors while fetching the deck or heroes, a custom alert component is developed to show it in a more user-friendly way.
 
+
+![Components Architecture](components-diagram.png)
+
 ## Ways to improve
 
 There are a couple of limitations based on the structure of the API and available tools.
